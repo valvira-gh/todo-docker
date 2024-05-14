@@ -1,5 +1,5 @@
 import { db } from "@/db";
-import { getTodos } from "@/actions/getTodos";
+import { getTodos } from "@/lib/actions";
 
 const TodoList: React.FC = async () => {
   const todos = await getTodos();
