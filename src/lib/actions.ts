@@ -3,6 +3,7 @@ import { db } from "@/db";
 import { Todo } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
+import { fromErrorToFormState } from "./utils";
 
 // Read all todos from the database
 export const getTodos = async (): Promise<Todo[]> => {
@@ -37,9 +38,7 @@ export const createTodo = async (formState: FormState, formData: FormData) => {
       },
     });
   } catch (error) {
-    return {
-      message: "An error occurred while creating the todo. Please try again.",
-    };
+    return fromErrorToFormState(error);
   }
 
   revalidatePath("/");
