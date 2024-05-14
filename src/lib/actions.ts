@@ -12,16 +12,60 @@ export const getTodos = async (): Promise<Todo[]> => {
   return todos;
 };
 
+type FormState = {
+  message: string;
+};
+
+// Handle Done button click
+export const handleDone = async (id: number) => {
+  await new Promise((resolve) => setTimeout(resolve, 250));
+
+  try {
+    await db.todo.delete({
+      where: {
+        id,
+      },
+    });
+  } catch (error) {
+    return fromErrorToFormState(error);
+  }
+
+  revalidatePath("/");
+
+  return {
+    message: "Todo marked as done!",
+  };
+};
+
+// export const handleDone = async (id: number) => {
+//   await new Promise((resolve) => setTimeout(resolve, 250));
+
+//   try {
+//     const todo = await db.todo.update({
+//       where: {
+//         id,
+//       },
+//       data: {
+//         completed: true,
+//       },
+//     });
+//   } catch (error) {
+//     return fromErrorToFormState(error);
+//   }
+
+//   revalidatePath("/");
+
+//   return {
+//     message: "Todo marked as done!",
+//   };
+// };
+
 // Write a new todo to the database
 
 // Define a schema for the form data using zod
 const createTodoSchema = z.object({
   task: z.string().min(1).max(100),
 });
-
-type FormState = {
-  message: string;
-};
 
 export const createTodo = async (formState: FormState, formData: FormData) => {
   await new Promise((resolve) => setTimeout(resolve, 250));
