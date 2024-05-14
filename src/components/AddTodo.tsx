@@ -1,4 +1,6 @@
+"use client";
 import { createTodo } from "@/actions/createTodo";
+import { SubmitButton } from "./SubmitButton";
 
 const AddTodo: React.FC = () => {
   return (
@@ -9,12 +11,7 @@ const AddTodo: React.FC = () => {
         placeholder="Add a new task"
         className="border-2 border-sky-500 p-2 rounded-lg my-1 mx-2"
       />
-      <button
-        type="submit"
-        className="bg-sky-500 text-white p-2 rounded-lg mt-2"
-      >
-        Add Task
-      </button>
+      <SubmitButton label="Add Todo" loading="Adding..." />
     </form>
   );
 };

@@ -1,6 +1,7 @@
 "use server";
 import { resolve } from "path";
 import { db } from "@/db";
+import { revalidatePath } from "next/cache";
 
 export const createTodo = async (formData: FormData) => {
   await new Promise((resolve) => setTimeout(resolve, 250));
@@ -17,4 +18,6 @@ export const createTodo = async (formData: FormData) => {
       createdAt: new Date(), // Add the createdAt property with the current date
     },
   });
+
+  revalidatePath("/"); // Revalidate the root path
 };
